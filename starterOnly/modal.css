@@ -31,6 +31,7 @@ p {
 img {
     padding-right: 1rem;
 }
+
 @media screen and (max-width: 540px) {
     img {
         padding-right: 3rem;
@@ -219,6 +220,10 @@ input {
     padding: 8px;
     border: 0.8px solid #ccc;
     outline: none;
+}
+
+.input-error {
+    border: 1px solid red;
 }
 
 .text-control {
@@ -492,6 +497,11 @@ input[data-error]::after {
     padding: 0;
 }
 
+.hero-text-error {
+    color: red;
+    font-size: 17px;
+}
+
 .btn-signup {
     outline: none;
     text-transform: capitalize;
@@ -536,6 +546,7 @@ footer {
         white-space: normal;
     }
 }
+
 @media screen and (max-width: 515px) {
     .hero-headline {
         font-size: 2.5rem;
