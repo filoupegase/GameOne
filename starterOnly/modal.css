@@ -13,7 +13,6 @@
 /* Landing Page */
 
 body {
-    margin: 0;
     display: flex;
     flex-direction: column;
     background-image: url("background.png");
@@ -224,6 +223,13 @@ input {
 
 .input-error {
     border: 1px solid red;
+}
+
+#confirmationMsg {
+    display: none;
+    align-items: center;
+    height: 80%;
+    margin: 134px 50px;
 }
 
 .text-control {

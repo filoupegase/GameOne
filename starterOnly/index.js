@@ -33,18 +33,24 @@ function closeModal() {
   modalbg.style.display = "none";
 }
 
-function validFormFirstName() {
+
+var bdr = document.getElementById("prenom");
+bdr.addEventListener('change', validFormFirstName);
+
+
+function validFormFirstName(event) {
   let preRegExp = new RegExp("^[a-zA-ZÀ-ú-s]+$");
   let errorPre = "ce champ n'est pas valide";
   var border = document.getElementById("prenom");
+  let value = this["prenom"] ? this["prenom"].value : event.target.value;
 
-  if (!preRegExp.test(this["prenom"].value)) {
+  if (!preRegExp.test(value)) {
     document.getElementById("errorprenom").textContent = errorPre;
-    border.style.border="2px solid red";
+    border.style.border = "2px solid red";
     return false;
   }
   document.getElementById("errorprenom").textContent = "";
-  border.style.border="";
+  border.style.border = "";
   return true;
 }
 
@@ -55,11 +61,11 @@ function validFormLastName() {
 
   if (!nomRegExp.test(this["nom"].value)) {
     document.getElementById("errornom").textContent = errorNom;
-    border.style.border="2px solid red";
+    border.style.border = "2px solid red";
     return false;
   }
   document.getElementById("errornom").textContent = "";
-  border.style.border="";
+  border.style.border = "";
   return true;
 }
 
@@ -70,11 +76,11 @@ function validFormEmail() {
 
   if (!mailRegExp.test(this["email"].value)) {
     document.getElementById("errormail").textContent = erroremail;
-    border.style.border="2px solid red";
+    border.style.border = "2px solid red";
     return false;
   }
   document.getElementById("errormail").textContent = "";
-  border.style.border="";
+  border.style.border = "";
   return true;
 }
 
@@ -85,11 +91,11 @@ function validBirthDate() {
 
   if (!valueDate) {
     document.getElementById("errorbirthdate").textContent = errorbirthdate;
-    border.style.border="2px solid red";
+    border.style.border = "2px solid red";
     return false;
   }
   document.getElementById("errorbirthdate").textContent = "";
-  border.style.border="";
+  border.style.border = "";
   return true;
 }
 
@@ -101,15 +107,15 @@ function validQuantity() {
 
   if (quantityTournament.value < 0 || quantityTournament.value === "") {
     document.getElementById("errorquantity").textContent = errorquantity;
-    border.style.border="2px solid red";
+    border.style.border = "2px solid red";
     return false;
   } else if (!quantityTournament.value.match(numbers)) {
     document.getElementById("errorquantity").textContent = "Veuillez saisir un nombre";
-    border.style.border="2px solid red";
+    border.style.border = "2px solid red";
     return false;
   }
   document.getElementById("errorquantity").textContent = "";
-  border.style.border="";
+  border.style.border = "";
   return true;
 }
 
@@ -142,9 +148,18 @@ function validCheckbox() {
   return true;
 }
 
+var formRemove = document.getElementById("reserve");
+const confirmationMsg = document.getElementById("confirmationMsg");
+const closeBtnRed = document.getElementById("closeBtnRed");
 
-document.forms["form"].addEventListener("submit", function (e) {
-  e.preventDefault();
+const submitBtn = document.querySelector(".btn-submit");
+
+closeBtnRed.style.display = "none";
+confirmationMsg.style.display = "none";
+
+document.forms["form"].addEventListener("submit", function (event) {
+  event.preventDefault();
+
   const validFromPrenom = validFormFirstName();
   console.log('validFromPrenom :', validFromPrenom);
 
@@ -167,6 +182,20 @@ document.forms["form"].addEventListener("submit", function (e) {
   console.log('validCheckboxOne :', validCheckboxOne);
 
   const checkValid = this.checkValidity();
-  console.log('checkValid :', checkValid)
-});
+  console.log('checkValid :', checkValid);
 
+  if (validFromPrenom && validFromNom && validFromEmail && validBirthDates
+    && validFromQuantity && validCheckboxLocation && validCheckboxOne && checkValid) {
+    form.style.display = "none";
+    confirmationMsg.style.display = "block";
+    confirmationMsg.style.fontSize = "40px";
+    confirmationMsg.style.textAlign = "center";
+
+    closeBtnRed.addEventListener("click", closeModal);
+    closeBtnRed.style.display = "block";
+    closeBtnRed.style.marginBottom = "30px";
+    submitBtn.style.display = "none";
+  } else {
+    console.log("not valid");
+  }
+});
